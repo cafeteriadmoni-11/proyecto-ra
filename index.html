@@ -4,44 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RA — Filosofía Educativa</title>
 
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-    <!-- MindAR -->
+    <!-- MindAR: reconocimiento de imágenes -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
     <!-- Estilos -->
-    <link rel="stylesheet" href="./estilo.css">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
 
+    <!-- ====================================== -->
+    <!-- INTERFAZ Y BOTONES                    -->
+    <!-- ====================================== -->
+
     <div id="interfaz">
         <h1>📚 La Filosofía Educativa a través del Tiempo</h1>
-        <p id="estado">🔍 Selecciona una imagen para iniciar.</p>
+
+        <p id="estado">
+            🔍 Selecciona una imagen para iniciar la cámara.
+        </p>
 
         <div class="controles">
-            <button type="button" data-imagen="1">Imagen 1: Educación</button>
-            <button type="button" data-imagen="2">Imagen 2: Reflexión</button>
-            <button type="button" data-imagen="3">Imagen 3: Diálogo</button>
+            <button data-imagen="1">📚 Imagen 1</button>
+            <button data-imagen="2">💡 Imagen 2</button>
+            <button data-imagen="3">💬 Imagen 3</button>
+            <button id="btnInfo">ℹ️ Ayuda</button>
+            <button id="btnReiniciar">🔄 Reiniciar</button>
         </div>
-
-        <button type="button" id="btnInfo">ℹ️ ¿Cómo funciona?</button>
-        <button type="button" id="btnReiniciar">🔄 Reiniciar animación</button>
     </div>
 
-    <!-- Aquí se crea la escena activa -->
+    <!-- Aquí se creará la escena activa -->
     <div id="contenedor-escena"></div>
 
 
-    <!-- ================================================== -->
-    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 1                  -->
-    <!-- Archivo: ./imagen1/imagen1/Imagen1.mind            -->
-    <!-- ================================================== -->
+    <!-- ====================================== -->
+    <!-- ESCENA ORIGINAL: CONTENIDO BASE        -->
+    <!-- Se utiliza para crear las plantillas   -->
+    <!-- ====================================== -->
 
-    <template id="contenidoImagen1">
+    <a-scene
+        id="escenaPlantilla"
+        embedded
+        color-space="sRGB"
+        renderer="colorManagement: true"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+
+        <!-- ====================================== -->
+        <!-- IMAGEN 1: EVOLUCIÓN DE LA EDUCACIÓN    -->
+        <!-- ====================================== -->
 
         <a-entity id="contenidoAntiguedad">
 
@@ -168,15 +185,11 @@
             </a-box>
 
         </a-entity>
-    </template>
 
 
-    <!-- ================================================== -->
-    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 2                  -->
-    <!-- Archivo: ./imagen1/imagen2/Imagen2.mind            -->
-    <!-- ================================================== -->
-
-    <template id="contenidoImagen2">
+        <!-- ====================================== -->
+        <!-- IMAGEN 2: REFLEXIÓN EDUCATIVA          -->
+        <!-- ====================================== -->
 
         <a-entity id="contenidoReflexion">
 
@@ -268,15 +281,11 @@
             </a-text>
 
         </a-entity>
-    </template>
 
 
-    <!-- ================================================== -->
-    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 3                  -->
-    <!-- Archivo: ./imagen1/imagen3/Imagen3.mind            -->
-    <!-- ================================================== -->
-
-    <template id="contenidoImagen3">
+        <!-- ====================================== -->
+        <!-- IMAGEN 3: DIÁLOGO EN EL TIEMPO        -->
+        <!-- ====================================== -->
 
         <a-entity id="contenidoDialogo">
 
@@ -377,9 +386,48 @@
             </a-text>
 
         </a-entity>
-    </template>
 
-    <script src="./codigo.js"></script>
+        <!-- Cámara de la escena base -->
+        <a-camera
+            position="0 0 0"
+            look-controls="enabled: false">
+        </a-camera>
+
+    </a-scene>
+
+
+    <!-- ====================================== -->
+    <!-- CREAR PLANTILLAS DESDE EL CONTENIDO    -->
+    <!-- ====================================== -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const escenaBase = document.getElementById("escenaPlantilla");
+
+            const contenidos = {
+                contenidoImagen1: "contenidoAntiguedad",
+                contenidoImagen2: "contenidoReflexion",
+                contenidoImagen3: "contenidoDialogo"
+            };
+
+            Object.entries(contenidos).forEach(function ([idPlantilla, idContenido]) {
+                const contenido = escenaBase.querySelector("#" + idContenido);
+
+                if (contenido) {
+                    const plantilla = document.createElement("template");
+                    plantilla.id = idPlantilla;
+                    plantilla.content.appendChild(contenido.cloneNode(true));
+                    document.body.appendChild(plantilla);
+                }
+            });
+
+            // Ocultar la escena base para que no compita con la cámara activa.
+            escenaBase.style.display = "none";
+        });
+    </script>
+
+    <!-- JavaScript de las tres experiencias -->
+    <script src="codigo.js"></script>
 
 </body>
 </html>
