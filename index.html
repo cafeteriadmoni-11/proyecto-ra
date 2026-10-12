@@ -1,1 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RA — Filosofía Educativa</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+    <div id="interfaz">
+        <h1>📚 La Filosofía Educativa a través del Tiempo</h1>
+        <p id="estado">🔍 Apunta la cámara hacia la imagen</p>
+    </div>
+
+    <a-scene arjs="sourceType: webcam; detectionMode: mono_and_matrix;" vr-mode-ui="enabled: false" id="escenaRA">
+        <a-marker type="nft" url="marcadores/imagen1/imagen1" id="marcadorPrincipal" smooth="true">
+            <a-entity id="contenido">
+                <!-- TÍTULO FLOTANTE -->
+                <a-text value="✨ LA EDUCACIÓN EVOLUCIONA ✨" scale="0.7 0.7 0.7" position="0 0.65 0" align="center"
+                    color="#6b21a8" font="mozillavr" class="titulo-flotante"></a-text>
+
+                <!-- LIBRO 1: ANTIGÜEDAD -->
+                <a-entity id="libroAntiguedad" class="libro-punto" position="-0.9 0.35 0">
+                    <a-box scale="0.22 0.16 0.08" color="#ef4444"></a-box>
+                    <a-box position="0.03 0 0.05" scale="0.20 0.14 0.02" color="#fef2f2"></a-box>
+                </a-entity>
+                <a-text value="Antigüedad" scale="0.20 0.20 0.20" position="-0.9 0.15 0" align="center"
+                    color="#b91c1c"></a-text>
+
+                <!-- LIBRO 2: EDAD MEDIA -->
+                <a-entity id="libroMedia" class="libro-punto" position="0 0.35 0">
+                    <a-box scale="0.22 0.16 0.08" color="#22c55e"></a-box>
+                    <a-box position="0.03 0 0.05" scale="0.20 0.14 0.02" color="#f0fdf4"></a-box>
+                </a-entity>
+                <a-text value="Edad Media" scale="0.20 0.20 0.20" position="0 0.15 0" align="center"
+                    color="#15803d"></a-text>
+
+                <!-- LIBRO 3: ACTUALIDAD -->
+                <a-entity id="libroModerna" class="libro-punto" position="0.9 0.35 0">
+                    <a-box scale="0.22 0.16 0.08" color="#3b82f6"></a-box>
+                    <a-box position="0.03 0 0.05" scale="0.20 0.14 0.02" color="#eff6ff"></a-box>
+                </a-entity>
+                <a-text value="Actualidad" scale="0.20 0.20 0.20" position="0.9 0.15 0" align="center"
+                    color="#1d4ed8"></a-text>
+
+                <!-- CAJA DE INFORMACIÓN -->
+                <a-plane id="cajaInfo" position="0 -0.35 0" scale="1.8 0.7 1" color="#ffffff" opacity="0.92"
+                    visible="false"></a-plane>
+                <a-text id="textoInfo" position="0 -0.30 0.01" scale="0.24 0.24 0.24" align="center" color="#2d3748"
+                    wrap-count="35" visible="false"></a-text>
+
+                <!-- LIBRO DECORATIVO GIRATORIO -->
+                <a-box position="0 0.9 0" scale="0.32 0.22 0.05" color="#f59e0b" class="libro-grande"></a-box>
+                <a-box position="0.02 0.9 0.03" scale="0.30 0.20 0.02" color="#fef3c7" class="libro-grande"></a-box>
+            </a-entity>
+        </a-marker>
+        <!-- TU IMAGEN2 COMO MARCADOR -->
+        <a-marker type="nft" url="marcadores/imagen1/imagen2/Imagen2" id="marcadorImagen2" smooth="true">
+            <a-entity id="contenido">
+                <!-- TÍTULO -->
+                <a-text value="💡 REFLEXIÓN" scale="0.6 0.6 0.6" position="0 0.75 0" align="center" color="#6b21a8"
+                    font="mozillavr" class="titulo-flotante"></a-text>
+
+                <!-- BOCADILLO ANIMADO -->
+                <a-plane id="bocadillo" position="0 0.35 0" scale="2.2 0.85 1" color="#ffffff" opacity="0.95"
+                    visible="false" class="brillo-borde"></a-plane>
+
+                <!-- TEXTO QUE SE ESCRIBE -->
+                <a-text id="textoMensaje" position="0 0.35 0.01" scale="0.22 0.22 0.22" align="center" color="#2d3748"
+                    wrap-count="45" visible="false" value=""></a-text>
+
+                <!-- PARTÍCULAS DECORATIVAS -->
+                <a-entity id="particulas" position="0 0.5 0">
+                    <a-sphere class="nota" position="-0.6 0.2 0" radius="0.03" color="#f59e0b"
+                        visible="false"></a-sphere>
+                    <a-sphere class="nota" position="0.6 0.15 0" radius="0.025" color="#8b5cf6"
+                        visible="false"></a-sphere>
+                    <a-sphere class="nota" position="0 0.25 0" radius="0.035" color="#22c55e"
+                        visible="false"></a-sphere>
+                    <a-sphere class="nota" position="-0.4 -0.1 0" radius="0.028" color="#3b82f6"
+                        visible="false"></a-sphere>
+                    <a-sphere class="nota" position="0.5 -0.05 0" radius="0.03" color="#ec4899"
+                        visible="false"></a-sphere>
+                </a-entity>
+
+                <!-- MENSAJE FINAL -->
+                <a-text id="mensajeFinal" value="✨ La educación transforma el mundo ✨" scale="0.35 0.35 0.35"
+                    position="0 -0.5 0" align="center" color="#6b21a8" visible="false" class="final-flotante"></a-text>
+            </a-entity>
+        </a-marker>
+        <a-marker type="nft" url="marcadores/imagen1/imagen3/Imagen3" id="marcadorImagen3" smooth="true">
+            <a-entity id="contenido">
+                <!-- TÍTULO PRINCIPAL -->
+                <a-text value="✨ UN DIÁLOGO EN EL TIEMPO ✨" scale="0.55 0.55 0.55" position="0 0.80 0" align="center"
+                    color="#6b21a8" font="mozillavr" class="titulo-flotante"></a-text>
+
+                <!-- BOCADILLO 1: Niña → Pregunta -->
+                <a-plane id="bocadilloPregunta" position="0.35 0.55 0" scale="1.3 0.45 1" color="#e0f2fe" opacity="0.95"
+                    visible="false" class="brillo-azul"></a-plane>
+                <a-text id="textoPregunta" position="0.35 0.55 0.01" scale="0.22 0.22 0.22" align="center"
+                    color="#1e40af" wrap-count="20" visible="false" value=""></a-text>
+
+                <!-- BOCADILLO 2: Maestra → Respuesta -->
+                <a-plane id="bocadilloRespuesta" position="-0.35 0.15 0" scale="1.6 0.65 1" color="#fef3c7"
+                    opacity="0.95" visible="false" class="brillo-dorado"></a-plane>
+                <a-text id="textoRespuesta" position="-0.35 0.15 0.01" scale="0.20 0.20 0.20" align="center"
+                    color="#92400e" wrap-count="28" visible="false" value=""></a-text>
+
+                <!-- ELEMENTOS DECORATIVOS: Libros flotantes -->
+                <a-entity id="decoraciones" position="0 0 0">
+                    <a-box id="libro1" position="-0.8 0.0 0" scale="0.18 0.13 0.05" color="#f59e0b" visible="false"
+                        class="libro-deco"></a-box>
+                    <a-box id="libro2" position="0.8 0.0 0" scale="0.18 0.13 0.05" color="#8b5cf6" visible="false"
+                        class="libro-deco"></a-box>
+                    <a-box id="libro3" position="0 -0.4 0" scale="0.22 0.16 0.05" color="#22c55e" visible="false"
+                        class="libro-deco"></a-box>
+                </a-entity>
+
+                <!-- MENSAJE FINAL -->
+                <a-text id="mensajeFinal" value="🌍 La educación construye el futuro" scale="0.32 0.32 0.32"
+                    position="0 -0.70 0" align="center" color="#6b21a8" visible="false" class="mensaje-final"></a-text>
+            </a-entity>
+        </a-marker>
+
+
+        <a-entity camera></a-entity>
+    </a-scene>
+    <script src="codigo.js"></script>
+</body>
+
+</html>
