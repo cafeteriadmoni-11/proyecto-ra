@@ -482,3 +482,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Iniciar con la imagen 1.
     cargarImagen(1);
 });
+    // Crear plantillas a partir del contenido que ya existe en el HTML.
+    const escenaPlantilla = document.getElementById("escenaPlantilla");
+
+    const contenidosOriginales = {
+        contenidoImagen1: "contenidoAntiguedad",
+        contenidoImagen2: "contenidoReflexion",
+        contenidoImagen3: "contenidoDialogo"
+    };
+
+    Object.entries(contenidosOriginales).forEach(([idPlantilla, idContenido]) => {
+        const contenido = escenaPlantilla?.querySelector("#" + idContenido);
+
+        if (contenido && !document.getElementById(idPlantilla)) {
+            const plantilla = document.createElement("template");
+            plantilla.id = idPlantilla;
+            plantilla.content.appendChild(contenido.cloneNode(true));
+            document.body.appendChild(plantilla);
+        }
+    });
+
+    // Ocultar la escena original: solo se usará como fuente.
+    if (escenaPlantilla) {
+        escenaPlantilla.style.display = "none";
+    }
