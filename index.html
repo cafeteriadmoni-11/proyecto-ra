@@ -9,421 +9,377 @@
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-    <!-- MindAR: reconocimiento de imágenes -->
+    <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-    <!-- Estilos del proyecto -->
-    <link rel="stylesheet" href="estilo.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./estilo.css">
 </head>
 
 <body>
 
     <div id="interfaz">
         <h1>📚 La Filosofía Educativa a través del Tiempo</h1>
-        <p id="estado">🔍 Apunta la cámara hacia una imagen.</p>
+        <p id="estado">🔍 Selecciona una imagen para iniciar.</p>
+
+        <div class="controles">
+            <button type="button" data-imagen="1">Imagen 1: Educación</button>
+            <button type="button" data-imagen="2">Imagen 2: Reflexión</button>
+            <button type="button" data-imagen="3">Imagen 3: Diálogo</button>
+        </div>
+
+        <button type="button" id="btnInfo">ℹ️ ¿Cómo funciona?</button>
+        <button type="button" id="btnReiniciar">🔄 Reiniciar animación</button>
     </div>
 
-    <a-scene
-        id="escenaRA"
-        mindar-image="imageTargetSrc: ./imagen1/imagen1/Imagen1.mind; autoStart: true; uiLoading: yes; uiScanning: yes; maxTrack: 3;"
-        color-space="sRGB"
-        renderer="colorManagement: true"
-        vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false">
+    <!-- Aquí se crea la escena activa -->
+    <div id="contenedor-escena"></div>
 
-        <!-- ====================================== -->
-        <!-- IMAGEN 1: EVOLUCIÓN DE LA EDUCACIÓN    -->
-        <!-- ====================================== -->
 
-        <a-entity
-            id="marcadorImagen1"
-            mindar-image-target="targetIndex: 0">
+    <!-- ================================================== -->
+    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 1                  -->
+    <!-- Archivo: ./imagen1/imagen1/Imagen1.mind            -->
+    <!-- ================================================== -->
 
-            <a-entity id="contenidoAntiguedad">
+    <template id="contenidoImagen1">
 
-                <a-text
-                    value="✨ LA EDUCACIÓN EVOLUCIONA ✨"
-                    position="0 0.65 0"
-                    scale="0.7 0.7 0.7"
-                    align="center"
-                    color="#6b21a8"
-                    class="titulo-flotante">
-                </a-text>
+        <a-entity id="contenidoAntiguedad">
 
-                <!-- Libro de la Antigüedad -->
-                <a-entity
-                    id="libroAntiguedad"
-                    class="libro-punto"
-                    position="-0.9 0.35 0">
+            <a-text
+                value="✨ LA EDUCACIÓN EVOLUCIONA ✨"
+                position="0 0.65 0"
+                scale="0.7 0.7 0.7"
+                align="center"
+                color="#6b21a8"
+                class="titulo-flotante">
+            </a-text>
 
-                    <a-box
-                        scale="0.22 0.16 0.08"
-                        color="#ef4444">
-                    </a-box>
+            <!-- Libro de la Antigüedad -->
+            <a-entity
+                id="libroAntiguedad"
+                class="libro-punto"
+                position="-0.9 0.35 0">
 
-                    <a-box
-                        position="0.03 0 0.05"
-                        scale="0.20 0.14 0.02"
-                        color="#fef2f2">
-                    </a-box>
-                </a-entity>
-
-                <a-text
-                    value="Antigüedad"
-                    position="-0.9 0.15 0"
-                    scale="0.20 0.20 0.20"
-                    align="center"
-                    color="#b91c1c">
-                </a-text>
-
-                <!-- Libro de la Edad Media -->
-                <a-entity
-                    id="libroMedia"
-                    class="libro-punto"
-                    position="0 0.35 0">
-
-                    <a-box
-                        scale="0.22 0.16 0.08"
-                        color="#22c55e">
-                    </a-box>
-
-                    <a-box
-                        position="0.03 0 0.05"
-                        scale="0.20 0.14 0.02"
-                        color="#f0fdf4">
-                    </a-box>
-                </a-entity>
-
-                <a-text
-                    value="Edad Media"
-                    position="0 0.15 0"
-                    scale="0.20 0.20 0.20"
-                    align="center"
-                    color="#15803d">
-                </a-text>
-
-                <!-- Libro de la actualidad -->
-                <a-entity
-                    id="libroModerna"
-                    class="libro-punto"
-                    position="0.9 0.35 0">
-
-                    <a-box
-                        scale="0.22 0.16 0.08"
-                        color="#3b82f6">
-                    </a-box>
-
-                    <a-box
-                        position="0.03 0 0.05"
-                        scale="0.20 0.14 0.02"
-                        color="#eff6ff">
-                    </a-box>
-                </a-entity>
-
-                <a-text
-                    value="Actualidad"
-                    position="0.9 0.15 0"
-                    scale="0.20 0.20 0.20"
-                    align="center"
-                    color="#1d4ed8">
-                </a-text>
-
-                <!-- Panel informativo -->
-                <a-plane
-                    id="cajaInfo"
-                    position="0 -0.35 0"
-                    scale="1.8 0.7 1"
-                    color="#ffffff"
-                    opacity="0.92"
-                    visible="false">
-                </a-plane>
-
-                <a-text
-                    id="textoInfo"
-                    position="0 -0.30 0.02"
-                    scale="0.24 0.24 0.24"
-                    align="center"
-                    color="#2d3748"
-                    wrap-count="35"
-                    visible="false">
-                </a-text>
-
-                <!-- Libro decorativo animado -->
                 <a-box
-                    position="0 0.9 0"
-                    scale="0.32 0.22 0.05"
+                    scale="0.22 0.16 0.08"
+                    color="#ef4444">
+                </a-box>
+
+                <a-box
+                    position="0.03 0 0.05"
+                    scale="0.20 0.14 0.02"
+                    color="#fef2f2">
+                </a-box>
+            </a-entity>
+
+            <a-text
+                value="Antigüedad"
+                position="-0.9 0.15 0"
+                scale="0.20 0.20 0.20"
+                align="center"
+                color="#b91c1c">
+            </a-text>
+
+            <!-- Libro de la Edad Media -->
+            <a-entity
+                id="libroMedia"
+                class="libro-punto"
+                position="0 0.35 0">
+
+                <a-box
+                    scale="0.22 0.16 0.08"
+                    color="#22c55e">
+                </a-box>
+
+                <a-box
+                    position="0.03 0 0.05"
+                    scale="0.20 0.14 0.02"
+                    color="#f0fdf4">
+                </a-box>
+            </a-entity>
+
+            <a-text
+                value="Edad Media"
+                position="0 0.15 0"
+                scale="0.20 0.20 0.20"
+                align="center"
+                color="#15803d">
+            </a-text>
+
+            <!-- Libro de la actualidad -->
+            <a-entity
+                id="libroModerna"
+                class="libro-punto"
+                position="0.9 0.35 0">
+
+                <a-box
+                    scale="0.22 0.16 0.08"
+                    color="#3b82f6">
+                </a-box>
+
+                <a-box
+                    position="0.03 0 0.05"
+                    scale="0.20 0.14 0.02"
+                    color="#eff6ff">
+                </a-box>
+            </a-entity>
+
+            <a-text
+                value="Actualidad"
+                position="0.9 0.15 0"
+                scale="0.20 0.20 0.20"
+                align="center"
+                color="#1d4ed8">
+            </a-text>
+
+            <!-- Panel informativo -->
+            <a-plane
+                id="cajaInfo"
+                position="0 -0.35 0"
+                scale="1.8 0.7 1"
+                color="#ffffff"
+                opacity="0.92"
+                visible="false">
+            </a-plane>
+
+            <a-text
+                id="textoInfo"
+                position="0 -0.30 0.02"
+                scale="0.24 0.24 0.24"
+                align="center"
+                color="#2d3748"
+                wrap-count="35"
+                visible="false">
+            </a-text>
+
+            <!-- Libro decorativo animado -->
+            <a-box
+                position="0 0.9 0"
+                scale="0.32 0.22 0.05"
+                color="#f59e0b"
+                class="libro-grande">
+            </a-box>
+
+            <a-box
+                position="0.02 0.9 0.03"
+                scale="0.30 0.20 0.02"
+                color="#fef3c7"
+                class="libro-grande">
+            </a-box>
+
+        </a-entity>
+    </template>
+
+
+    <!-- ================================================== -->
+    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 2                  -->
+    <!-- Archivo: ./imagen1/imagen2/Imagen2.mind            -->
+    <!-- ================================================== -->
+
+    <template id="contenidoImagen2">
+
+        <a-entity id="contenidoReflexion">
+
+            <a-text
+                value="💡 REFLEXIÓN"
+                position="0 0.75 0"
+                scale="0.6 0.6 0.6"
+                align="center"
+                color="#6b21a8"
+                class="titulo-flotante">
+            </a-text>
+
+            <!-- Bocadillo -->
+            <a-plane
+                id="bocadillo"
+                position="0 0.35 0"
+                scale="2.2 0.85 1"
+                color="#ffffff"
+                opacity="0.95"
+                visible="false"
+                class="brillo-borde">
+            </a-plane>
+
+            <a-text
+                id="textoMensaje"
+                position="0 0.35 0.02"
+                scale="0.22 0.22 0.22"
+                align="center"
+                color="#2d3748"
+                wrap-count="45"
+                visible="false"
+                value="">
+            </a-text>
+
+            <!-- Partículas decorativas -->
+            <a-entity id="particulas">
+
+                <a-sphere
+                    class="nota"
+                    position="-0.6 0.2 0"
+                    radius="0.03"
                     color="#f59e0b"
-                    class="libro-grande">
+                    visible="false">
+                </a-sphere>
+
+                <a-sphere
+                    class="nota"
+                    position="0.6 0.15 0"
+                    radius="0.025"
+                    color="#8b5cf6"
+                    visible="false">
+                </a-sphere>
+
+                <a-sphere
+                    class="nota"
+                    position="0 0.25 0"
+                    radius="0.035"
+                    color="#22c55e"
+                    visible="false">
+                </a-sphere>
+
+                <a-sphere
+                    class="nota"
+                    position="-0.4 -0.1 0"
+                    radius="0.028"
+                    color="#3b82f6"
+                    visible="false">
+                </a-sphere>
+
+                <a-sphere
+                    class="nota"
+                    position="0.5 -0.05 0"
+                    radius="0.03"
+                    color="#ec4899"
+                    visible="false">
+                </a-sphere>
+
+            </a-entity>
+
+            <a-text
+                id="mensajeFinalReflexion"
+                value="✨ La educación transforma el mundo ✨"
+                position="0 -0.5 0"
+                scale="0.35 0.35 0.35"
+                align="center"
+                color="#6b21a8"
+                visible="false"
+                class="final-flotante">
+            </a-text>
+
+        </a-entity>
+    </template>
+
+
+    <!-- ================================================== -->
+    <!-- CONTENIDO ORIGINAL DE LA IMAGEN 3                  -->
+    <!-- Archivo: ./imagen1/imagen3/Imagen3.mind            -->
+    <!-- ================================================== -->
+
+    <template id="contenidoImagen3">
+
+        <a-entity id="contenidoDialogo">
+
+            <a-text
+                value="✨ UN DIÁLOGO EN EL TIEMPO ✨"
+                position="0 0.8 0"
+                scale="0.55 0.55 0.55"
+                align="center"
+                color="#6b21a8"
+                class="titulo-flotante">
+            </a-text>
+
+            <!-- Pregunta -->
+            <a-plane
+                id="bocadilloPregunta"
+                position="0.35 0.55 0"
+                scale="1.3 0.45 1"
+                color="#e0f2fe"
+                opacity="0.95"
+                visible="false"
+                class="brillo-azul">
+            </a-plane>
+
+            <a-text
+                id="textoPregunta"
+                position="0.35 0.55 0.02"
+                scale="0.22 0.22 0.22"
+                align="center"
+                color="#1e40af"
+                wrap-count="20"
+                visible="false"
+                value="">
+            </a-text>
+
+            <!-- Respuesta -->
+            <a-plane
+                id="bocadilloRespuesta"
+                position="-0.35 0.15 0"
+                scale="1.6 0.65 1"
+                color="#fef3c7"
+                opacity="0.95"
+                visible="false"
+                class="brillo-dorado">
+            </a-plane>
+
+            <a-text
+                id="textoRespuesta"
+                position="-0.35 0.15 0.02"
+                scale="0.20 0.20 0.20"
+                align="center"
+                color="#92400e"
+                wrap-count="28"
+                visible="false"
+                value="">
+            </a-text>
+
+            <!-- Libros decorativos -->
+            <a-entity id="decoraciones">
+
+                <a-box
+                    id="libroDialogo1"
+                    position="-0.8 0 0"
+                    scale="0.18 0.13 0.05"
+                    color="#f59e0b"
+                    visible="false"
+                    class="libro-deco">
                 </a-box>
 
                 <a-box
-                    position="0.02 0.9 0.03"
-                    scale="0.30 0.20 0.02"
-                    color="#fef3c7"
-                    class="libro-grande">
+                    id="libroDialogo2"
+                    position="0.8 0 0"
+                    scale="0.18 0.13 0.05"
+                    color="#8b5cf6"
+                    visible="false"
+                    class="libro-deco">
+                </a-box>
+
+                <a-box
+                    id="libroDialogo3"
+                    position="0 -0.4 0"
+                    scale="0.22 0.16 0.05"
+                    color="#22c55e"
+                    visible="false"
+                    class="libro-deco">
                 </a-box>
 
             </a-entity>
+
+            <a-text
+                id="mensajeFinalDialogo"
+                value="🌍 La educación construye el futuro"
+                position="0 -0.7 0"
+                scale="0.32 0.32 0.32"
+                align="center"
+                color="#6b21a8"
+                visible="false"
+                class="mensaje-final">
+            </a-text>
+
         </a-entity>
+    </template>
 
-
-        <!-- ====================================== -->
-        <!-- IMAGEN 2: REFLEXIÓN EDUCATIVA          -->
-        <!-- ====================================== -->
-
-        <a-entity
-            id="marcadorImagen2"
-            mindar-image-target="targetIndex: 1">
-
-            <a-entity id="contenidoReflexion">
-
-                <a-text
-                    value="💡 REFLEXIÓN"
-                    position="0 0.75 0"
-                    scale="0.6 0.6 0.6"
-                    align="center"
-                    color="#6b21a8"
-                    class="titulo-flotante">
-                </a-text>
-
-                <!-- Bocadillo que aparece con la animación -->
-                <a-plane
-                    id="bocadillo"
-                    position="0 0.35 0"
-                    scale="2.2 0.85 1"
-                    color="#ffffff"
-                    opacity="0.95"
-                    visible="false"
-                    class="brillo-borde">
-                </a-plane>
-
-                <a-text
-                    id="textoMensaje"
-                    position="0 0.35 0.02"
-                    scale="0.22 0.22 0.22"
-                    align="center"
-                    color="#2d3748"
-                    wrap-count="45"
-                    visible="false"
-                    value="">
-                </a-text>
-
-                <!-- Partículas decorativas -->
-                <a-entity id="particulas">
-
-                    <a-sphere
-                        class="nota"
-                        position="-0.6 0.2 0"
-                        radius="0.03"
-                        color="#f59e0b"
-                        visible="false">
-                    </a-sphere>
-
-                    <a-sphere
-                        class="nota"
-                        position="0.6 0.15 0"
-                        radius="0.025"
-                        color="#8b5cf6"
-                        visible="false">
-                    </a-sphere>
-
-                    <a-sphere
-                        class="nota"
-                        position="0 0.25 0"
-                        radius="0.035"
-                        color="#22c55e"
-                        visible="false">
-                    </a-sphere>
-
-                    <a-sphere
-                        class="nota"
-                        position="-0.4 -0.1 0"
-                        radius="0.028"
-                        color="#3b82f6"
-                        visible="false">
-                    </a-sphere>
-
-                    <a-sphere
-                        class="nota"
-                        position="0.5 -0.05 0"
-                        radius="0.03"
-                        color="#ec4899"
-                        visible="false">
-                    </a-sphere>
-
-                </a-entity>
-
-                <a-text
-                    id="mensajeFinalReflexion"
-                    value="✨ La educación transforma el mundo ✨"
-                    position="0 -0.5 0"
-                    scale="0.35 0.35 0.35"
-                    align="center"
-                    color="#6b21a8"
-                    visible="false"
-                    class="final-flotante">
-                </a-text>
-
-            </a-entity>
-        </a-entity>
-
-
-        <!-- ====================================== -->
-        <!-- IMAGEN 3: DIÁLOGO EN EL TIEMPO        -->
-        <!-- ====================================== -->
-
-        <a-entity
-            id="marcadorImagen3"
-            mindar-image-target="targetIndex: 2">
-
-            <a-entity id="contenidoDialogo">
-
-                <a-text
-                    value="✨ UN DIÁLOGO EN EL TIEMPO ✨"
-                    position="0 0.8 0"
-                    scale="0.55 0.55 0.55"
-                    align="center"
-                    color="#6b21a8"
-                    class="titulo-flotante">
-                </a-text>
-
-                <!-- Pregunta -->
-                <a-plane
-                    id="bocadilloPregunta"
-                    position="0.35 0.55 0"
-                    scale="1.3 0.45 1"
-                    color="#e0f2fe"
-                    opacity="0.95"
-                    visible="false"
-                    class="brillo-azul">
-                </a-plane>
-
-                <a-text
-                    id="textoPregunta"
-                    position="0.35 0.55 0.02"
-                    scale="0.22 0.22 0.22"
-                    align="center"
-                    color="#1e40af"
-                    wrap-count="20"
-                    visible="false"
-                    value="">
-                </a-text>
-
-                <!-- Respuesta -->
-                <a-plane
-                    id="bocadilloRespuesta"
-                    position="-0.35 0.15 0"
-                    scale="1.6 0.65 1"
-                    color="#fef3c7"
-                    opacity="0.95"
-                    visible="false"
-                    class="brillo-dorado">
-                </a-plane>
-
-                <a-text
-                    id="textoRespuesta"
-                    position="-0.35 0.15 0.02"
-                    scale="0.20 0.20 0.20"
-                    align="center"
-                    color="#92400e"
-                    wrap-count="28"
-                    visible="false"
-                    value="">
-                </a-text>
-
-                <!-- Libros decorativos -->
-                <a-entity id="decoraciones">
-
-                    <a-box
-                        id="libroDialogo1"
-                        position="-0.8 0 0"
-                        scale="0.18 0.13 0.05"
-                        color="#f59e0b"
-                        visible="false"
-                        class="libro-deco">
-                    </a-box>
-
-                    <a-box
-                        id="libroDialogo2"
-                        position="0.8 0 0"
-                        scale="0.18 0.13 0.05"
-                        color="#8b5cf6"
-                        visible="false"
-                        class="libro-deco">
-                    </a-box>
-
-                    <a-box
-                        id="libroDialogo3"
-                        position="0 -0.4 0"
-                        scale="0.22 0.16 0.05"
-                        color="#22c55e"
-                        visible="false"
-                        class="libro-deco">
-                    </a-box>
-
-                </a-entity>
-
-                <a-text
-                    id="mensajeFinalDialogo"
-                    value="🌍 La educación construye el futuro"
-                    position="0 -0.7 0"
-                    scale="0.32 0.32 0.32"
-                    align="center"
-                    color="#6b21a8"
-                    visible="false"
-                    class="mensaje-final">
-                </a-text>
-
-            </a-entity>
-        </a-entity>
-
-
-        <!-- Cámara para MindAR -->
-        <a-camera
-            position="0 0 0"
-            look-controls="enabled: false">
-        </a-camera>
-
-    </a-scene>
-
-    <!-- Tus animaciones originales -->
-    <script src="codigo.js"></script>
-
-    <!-- Control independiente de cada imagen -->
-    <script>
-        const estado = document.getElementById("estado");
-
-        const marcadores = [
-            {
-                id: "marcadorImagen1",
-                nombre: "Evolución de la educación"
-            },
-            {
-                id: "marcadorImagen2",
-                nombre: "Reflexión educativa"
-            },
-            {
-                id: "marcadorImagen3",
-                nombre: "Diálogo en el tiempo"
-            }
-        ];
-
-        marcadores.forEach(function (dato) {
-            const marcador = document.getElementById(dato.id);
-
-            marcador.addEventListener("targetFound", function () {
-                estado.textContent = "✅ " + dato.nombre;
-
-                // Activa únicamente el contenido del marcador detectado.
-                marcador.setAttribute("visible", true);
-            });
-
-            marcador.addEventListener("targetLost", function () {
-                estado.textContent =
-                    "🔍 Apunta la cámara hacia una de las tres imágenes.";
-            });
-        });
-    </script>
+    <script src="./codigo.js"></script>
 
 </body>
 </html>
